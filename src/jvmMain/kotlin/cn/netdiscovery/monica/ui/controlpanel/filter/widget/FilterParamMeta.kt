@@ -81,6 +81,14 @@ object FilterParamMetaRegistry {
         "BlockFilter" to mapOf(
             // BlockFilter：blockSize 会被用作 Kotlin range 的 step，必须 > 0
             "blocksize" to FilterParamMeta(min = 1f, max = 128f, step = 1f, decimals = 0)
+        ),
+        "CropFilter" to mapOf(
+            // CropFilter：x, y 为起始坐标，w, h 为裁剪区域宽高
+            // 设置较大的最大值以支持高分辨率图片裁剪（最大支持 8192 像素）
+            "x" to FilterParamMeta(min = 0f, max = 8192f, step = 1f, decimals = 0),
+            "y" to FilterParamMeta(min = 0f, max = 8192f, step = 1f, decimals = 0),
+            "w" to FilterParamMeta(min = 1f, max = 8192f, step = 1f, decimals = 0),
+            "h" to FilterParamMeta(min = 1f, max = 8192f, step = 1f, decimals = 0)
         )
     )
 
