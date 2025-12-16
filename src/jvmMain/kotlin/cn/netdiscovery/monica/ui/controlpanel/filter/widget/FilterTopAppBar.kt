@@ -1,4 +1,4 @@
-package cn.netdiscovery.monica.ui.controlpanel.filter
+package cn.netdiscovery.monica.ui.controlpanel.filter.widget
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*

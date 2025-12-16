@@ -1,7 +1,6 @@
-package cn.netdiscovery.monica.ui.controlpanel.filter
+package cn.netdiscovery.monica.ui.controlpanel.filter.widget
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardActions
@@ -28,6 +27,7 @@ import cn.netdiscovery.monica.rxcache.Param
 import cn.netdiscovery.monica.rxcache.getFilterParam
 import cn.netdiscovery.monica.rxcache.getFilterRemark
 import cn.netdiscovery.monica.state.ApplicationState
+import cn.netdiscovery.monica.ui.controlpanel.filter.viewmodel.FilterViewModel
 import cn.netdiscovery.monica.ui.i18n.I18nState
 import cn.netdiscovery.monica.utils.collator
 import cn.netdiscovery.monica.utils.extensions.safelyConvertToInt

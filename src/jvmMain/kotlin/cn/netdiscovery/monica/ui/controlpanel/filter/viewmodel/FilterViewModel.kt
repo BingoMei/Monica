@@ -1,4 +1,4 @@
-package cn.netdiscovery.monica.ui.controlpanel.filter
+package cn.netdiscovery.monica.ui.controlpanel.filter.viewmodel
 
 import cn.netdiscovery.monica.rxcache.FilterParam
 import cn.netdiscovery.monica.rxcache.Param
@@ -8,18 +8,17 @@ import cn.netdiscovery.monica.utils.collator
 import cn.netdiscovery.monica.utils.doFilter
 import cn.netdiscovery.monica.utils.extensions.launchWithSuspendLoading
 import cn.netdiscovery.monica.utils.extensions.safelyConvertToInt
-import filterNames
-import org.slf4j.Logger
 import cn.netdiscovery.monica.utils.logger
 import com.safframework.rxcache.ext.get
+import filterNames
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.withContext
 import kotlinx.coroutines.launch
+import org.slf4j.Logger
 import java.awt.image.BufferedImage
-import java.util.*
-import kotlin.math.min
+import java.util.LinkedHashMap
 import kotlin.math.max
+import kotlin.math.min
 
 /**
  *
@@ -33,8 +32,8 @@ import kotlin.math.max
 class FilterViewModel {
 
     private val logger: Logger = logger<FilterViewModel>()
-    var job:Job? = null
-    var previewJob:Job? = null
+    var job: Job? = null
+    var previewJob: Job? = null
 
     private data class PreviewCacheKey(
         val baseImageId: Int,
@@ -179,12 +178,12 @@ class FilterViewModel {
         paramMap: Map<Pair<String, String>, String>,
         sourceImageOverride: BufferedImage? = null,
         debounceMs: Long = 0,
-        onSuccess: (java.awt.image.BufferedImage) -> Unit,
+        onSuccess: (BufferedImage) -> Unit,
         onError: (Throwable) -> Unit
     ) {
         // 取消之前的预览任务
         previewJob?.cancel()
-        
+
         previewJob = state.scope.launch {
             try {
                 if (debounceMs > 0) {

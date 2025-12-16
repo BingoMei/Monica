@@ -16,7 +16,7 @@ import cn.netdiscovery.monica.ui.controlpanel.cartoon.CartoonViewModel
 import cn.netdiscovery.monica.ui.controlpanel.colorcorrection.ColorCorrectionViewModel
 import cn.netdiscovery.monica.ui.controlpanel.cropimage.CropViewModel
 import cn.netdiscovery.monica.ui.controlpanel.doodle.DoodleViewModel
-import cn.netdiscovery.monica.ui.controlpanel.filter.FilterViewModel
+import cn.netdiscovery.monica.ui.controlpanel.filter.viewmodel.FilterViewModel
 import cn.netdiscovery.monica.ui.controlpanel.generategif.GenerateGifViewModel
 import cn.netdiscovery.monica.ui.controlpanel.shapedrawing.ShapeDrawingViewModel
 import cn.netdiscovery.monica.ui.main.MainViewModel

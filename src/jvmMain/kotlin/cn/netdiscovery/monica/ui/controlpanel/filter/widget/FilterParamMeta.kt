@@ -1,4 +1,4 @@
-package cn.netdiscovery.monica.ui.controlpanel.filter
+package cn.netdiscovery.monica.ui.controlpanel.filter.widget
 
 import cn.netdiscovery.monica.rxcache.Param
 import kotlin.math.max

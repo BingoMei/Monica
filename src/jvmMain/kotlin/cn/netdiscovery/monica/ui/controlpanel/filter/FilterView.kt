@@ -1,41 +1,27 @@
 package cn.netdiscovery.monica.ui.controlpanel.filter
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.*
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.toPainter
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import cn.netdiscovery.monica.rxcache.Param
-import cn.netdiscovery.monica.rxcache.getFilterParam
-import cn.netdiscovery.monica.rxcache.getFilterRemark
 import cn.netdiscovery.monica.state.ApplicationState
+import cn.netdiscovery.monica.ui.controlpanel.filter.viewmodel.FilterViewModel
+import cn.netdiscovery.monica.ui.controlpanel.filter.widget.FilterAdjustmentPanel
+import cn.netdiscovery.monica.ui.controlpanel.filter.widget.FilterListPanel
+import cn.netdiscovery.monica.ui.controlpanel.filter.widget.FilterPreviewArea
+import cn.netdiscovery.monica.ui.controlpanel.filter.widget.FilterTopAppBar
+import cn.netdiscovery.monica.ui.controlpanel.filter.widget.buildDefaultParamMap
 import cn.netdiscovery.monica.ui.i18n.rememberI18nState
 import cn.netdiscovery.monica.ui.widget.*
 import cn.netdiscovery.monica.utils.chooseImage
-import cn.netdiscovery.monica.utils.collator
-import cn.netdiscovery.monica.utils.extensions.safelyConvertToInt
 import cn.netdiscovery.monica.utils.getBufferedImage
-import filterMaps
 import filterNames
 import loadingDisplay
 import org.koin.compose.koinInject
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import java.util.*
 import kotlin.collections.HashMap
 
 /**

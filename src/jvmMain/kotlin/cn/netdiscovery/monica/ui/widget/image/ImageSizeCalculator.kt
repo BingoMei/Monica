@@ -4,7 +4,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import cn.netdiscovery.monica.state.ApplicationState
 import androidx.compose.ui.graphics.toComposeImageBitmap
-import cn.netdiscovery.monica.ui.controlpanel.filter.FilterViewModel
+import cn.netdiscovery.monica.ui.controlpanel.filter.viewmodel.FilterViewModel
 import cn.netdiscovery.monica.utils.logger
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
