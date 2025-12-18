@@ -17,7 +17,7 @@ import java.nio.file.StandardOpenOption
  * @param configFile 配置文件路径
  * @param gson Gson 实例，用于序列化/反序列化
  * 
- * @author: Monica Team
+ * @author: Tony Shen
  * @date: 2025-12-12
  */
 class FileConfigStorage(
@@ -142,4 +142,3 @@ class FileConfigStorage(
         return configMap.keys.toList()
     }
 }
-

@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory
  * 
  * 注意：需要先调用 initialize() 方法初始化，传入 RxCache 实例。
  * 
- * @author: Monica Team
+ * @author: Tony Shen
  * @date: 2025-12-12
  */
 object ConfigManager {

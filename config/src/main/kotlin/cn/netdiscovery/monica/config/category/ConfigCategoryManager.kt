@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory
  * 
  * 根据配置分类选择合适的存储和验证策略。
  * 
- * @author: Monica Team
+ * @author: Tony Shen
  * @date: 2025-12-12
  */
 object ConfigCategoryManager {

@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory
  * 
  * @param rxCache RxCache 实例，由外部传入以避免循环依赖
  * 
- * @author: Monica Team
+ * @author: Tony Shen
  * @date: 2025-12-12
  */
 class RxCacheConfigStorage(

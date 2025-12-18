@@ -11,7 +11,7 @@ import java.util.prefs.Preferences
  * 
  * @param preferencesNode Preferences 节点，默认为用户节点
  * 
- * @author: Monica Team
+ * @author: Tony Shen
  * @date: 2025-12-12
  */
 class PreferencesConfigStorage(

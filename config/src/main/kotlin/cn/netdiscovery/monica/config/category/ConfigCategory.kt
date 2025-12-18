@@ -5,7 +5,7 @@ package cn.netdiscovery.monica.config.category
  * 
  * 用于区分不同类型的配置，便于统一管理和验证。
  * 
- * @author: Monica Team
+ * @author: Tony Shen
  * @date: 2025-12-12
  */
 enum class ConfigCategory {

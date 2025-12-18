@@ -9,7 +9,7 @@ import cn.netdiscovery.monica.domain.GeneralSettings
  * 
  * 集中定义所有配置的元信息，包括分类、存储类型、验证规则和默认值。
  * 
- * @author: Monica Team
+ * @author: Tony Shen
  * @date: 2025-12-12
  */
 object ConfigDefinitions {
@@ -71,4 +71,3 @@ object ConfigDefinitions {
         // 这里可以添加其他临时配置的定义
     }
 }
-

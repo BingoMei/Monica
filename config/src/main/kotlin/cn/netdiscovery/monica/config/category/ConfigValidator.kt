@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory
  * 
  * 用于验证配置值的有效性。
  * 
- * @author: Monica Team
+ * @author: Tony Shen
  * @date: 2025-12-12
  */
 interface ConfigValidator<T> {

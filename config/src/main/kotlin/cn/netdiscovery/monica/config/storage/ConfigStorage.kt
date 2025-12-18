@@ -5,7 +5,7 @@ package cn.netdiscovery.monica.config.storage
  * 
  * 抽象了不同存储实现的差异，提供统一的配置读写接口。
  * 
- * @author: Monica Team
+ * @author: Tony Shen
  * @date: 2025-12-12
  */
 interface ConfigStorage {
