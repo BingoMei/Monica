@@ -1,5 +1,7 @@
 package cn.netdiscovery.monica.config.storage
 
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.safframework.rxcache.RxCache
 import com.safframework.rxcache.ext.get
 import org.slf4j.Logger
@@ -23,6 +25,7 @@ class RxCacheConfigStorage(
 ) : ConfigStorage {
     
     private val logger: Logger = LoggerFactory.getLogger(RxCacheConfigStorage::class.java)
+    private val gson = Gson()
     
     override fun <T> save(key: String, value: T) {
         try {
@@ -52,6 +55,17 @@ class RxCacheConfigStorage(
                     // 对于复杂对象，检查类型是否匹配
                     result::class.java.isAssignableFrom(default!!::class.java) -> result as T
                     default::class.java.isAssignableFrom(result::class.java) -> result as T
+                    // 如果 result 是 LinkedTreeMap（Gson 反序列化的结果），尝试用 Gson 转换
+                    result is com.google.gson.internal.LinkedTreeMap<*, *> -> {
+                        try {
+                            val json = gson.toJson(result)
+                            @Suppress("UNCHECKED_CAST")
+                            gson.fromJson(json, default!!::class.java) as T ?: default
+                        } catch (e: Exception) {
+                            logger.warn("Failed to convert LinkedTreeMap to ${default!!::class.java.simpleName} for key: $key", e)
+                            default
+                        }
+                    }
                     else -> {
                         logger.warn("Type mismatch for key: $key, expected: ${default!!::class.java.simpleName}, got: ${result::class.java.simpleName}")
                         default

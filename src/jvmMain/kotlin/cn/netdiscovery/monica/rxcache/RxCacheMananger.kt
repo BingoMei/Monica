@@ -1,8 +1,9 @@
 package cn.netdiscovery.monica.rxcache
 
+import cn.netdiscovery.monica.config.storage.ConfigManager
+import cn.netdiscovery.monica.config.storage.ConfigType
 import cn.netdiscovery.monica.utils.AppDirs
 import com.safframework.rxcache.RxCache
-import com.safframework.rxcache.ext.get
 import com.safframework.rxcache.ext.persistence
 import com.safframework.rxcache.memory.impl.FIFOMemoryImpl
 import com.safframework.rxcache.persistence.okio.OkioImpl
@@ -26,9 +27,17 @@ val rxCache: RxCache by lazy {
 }
 
 
-fun getFilterParam(filterName:String):List<Param>? = rxCache.get<FilterParam>(filterName)?.data?.params
+fun getFilterParam(filterName:String):List<Param>? {
+    val defaultFilterParam = FilterParam(filterName, null, null, emptyList())
+    val filterParam = ConfigManager.load(filterName, defaultFilterParam, ConfigType.RX_CACHE)
+    return filterParam.params.takeIf { it.isNotEmpty() }
+}
 
-fun getFilterRemark(filterName:String):String? = rxCache.get<FilterParam>(filterName)?.data?.remark
+fun getFilterRemark(filterName:String):String? {
+    val defaultFilterParam = FilterParam(filterName, null, null, emptyList())
+    val filterParam = ConfigManager.load(filterName, defaultFilterParam, ConfigType.RX_CACHE)
+    return filterParam.remark
+}
 
 /**
  * 清空缓存所有数据

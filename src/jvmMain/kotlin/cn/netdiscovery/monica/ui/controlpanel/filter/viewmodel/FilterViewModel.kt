@@ -1,15 +1,15 @@
 package cn.netdiscovery.monica.ui.controlpanel.filter.viewmodel
 
+import cn.netdiscovery.monica.config.storage.ConfigManager
+import cn.netdiscovery.monica.config.storage.ConfigType
 import cn.netdiscovery.monica.rxcache.FilterParam
 import cn.netdiscovery.monica.rxcache.Param
-import cn.netdiscovery.monica.rxcache.rxCache
 import cn.netdiscovery.monica.state.ApplicationState
 import cn.netdiscovery.monica.utils.collator
 import cn.netdiscovery.monica.utils.doFilter
 import cn.netdiscovery.monica.utils.extensions.launchWithSuspendLoading
 import cn.netdiscovery.monica.utils.extensions.safelyConvertToInt
 import cn.netdiscovery.monica.utils.logger
-import com.safframework.rxcache.ext.get
 import filterNames
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -150,9 +150,11 @@ class FilterViewModel {
             // 按照参数名首字母进行排序
             list.sortWith { o1, o2 -> collator.compare(o1.key, o2.key); }
 
-            val filterParam = rxCache.get<FilterParam>(filterName)?.data
-            filterParam?.params = list
-            rxCache.saveOrUpdate(filterName, filterParam) // 保存滤镜参数
+            // 加载滤镜参数配置，更新参数列表并保存
+            val defaultFilterParam = FilterParam(filterName, null, null, emptyList())
+            val filterParam = ConfigManager.load(filterName, defaultFilterParam, ConfigType.RX_CACHE)
+            filterParam.params = list
+            ConfigManager.save(filterName, filterParam, ConfigType.RX_CACHE) // 保存滤镜参数
 
             val array:MutableList<Any> = list.map { it.value }.toMutableList()
             logger.info("filterName: $filterName, array: $array")

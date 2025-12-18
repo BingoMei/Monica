@@ -1,5 +1,7 @@
 package cn.netdiscovery.monica.rxcache
 
+import cn.netdiscovery.monica.config.storage.ConfigManager
+import cn.netdiscovery.monica.config.storage.ConfigType
 import cn.netdiscovery.monica.opencv.ImageProcess
 import com.safframework.rxcache.reflect.TypeToken
 import com.safframework.rxcache.utils.GsonUtils
@@ -43,7 +45,7 @@ fun initFilterParamsConfig(){
 
     filterMaps.clear()
     filters.forEach {
-        rxCache.saveOrUpdate(it.name, it)
+        ConfigManager.save(it.name, it, ConfigType.RX_CACHE)
         filterMaps[it.name] = it.desc?:""
     }
 }
