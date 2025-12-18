@@ -2,6 +2,7 @@ package cn.netdiscovery.monica.ui.preview
 
 import androidx.compose.ui.geometry.Offset
 import cn.netdiscovery.monica.config.KEY_GENERAL_SETTINGS
+import cn.netdiscovery.monica.config.category.ConfigCategoryManager
 import cn.netdiscovery.monica.domain.GeneralSettings
 import cn.netdiscovery.monica.http.httpClient
 import cn.netdiscovery.monica.imageprocess.BufferedImages
@@ -11,7 +12,6 @@ import cn.netdiscovery.monica.imageprocess.utils.writeImageFile
 import cn.netdiscovery.monica.imageprocess.utils.writeImageFileAsWebP
 import cn.netdiscovery.monica.manager.OpenCVManager
 import cn.netdiscovery.monica.opencv.ImageProcess
-import cn.netdiscovery.monica.rxcache.rxCache
 import cn.netdiscovery.monica.state.ApplicationState
 import cn.netdiscovery.monica.utils.ImageFormatDetector
 import cn.netdiscovery.monica.i18n.LocalizationManager
@@ -20,7 +20,6 @@ import cn.netdiscovery.monica.utils.extensions.launchWithLoading
 import cn.netdiscovery.monica.utils.extensions.launchWithSuspendLoading
 import cn.netdiscovery.monica.utils.logger
 import com.safframework.kotlin.coroutines.IO
-import com.safframework.rxcache.ext.get
 import kotlinx.coroutines.launch
 import org.slf4j.Logger
 import showTopToast
@@ -45,6 +44,15 @@ class PreviewViewModel {
     private val logger: Logger = logger<PreviewViewModel>()
 
     private val blurFilter = FastBlur2D(15)
+    
+    /**
+     * 获取 GeneralSettings.size，带默认值
+     */
+    private fun getGeneralSettingsSize(): Int {
+        val defaultSettings = GeneralSettings(255, 255, 255, 512, 50, "", "", "", "LIGHT")
+        val settings = ConfigCategoryManager.load(KEY_GENERAL_SETTINGS, defaultSettings)
+        return settings.size
+    }
 
     fun loadUrl(picUrl:String, state: ApplicationState) {
         logger.info("load picUrl: $picUrl")
@@ -83,7 +91,7 @@ class PreviewViewModel {
             val xScale = (srcWidth.toFloat()/width)
             val yScale = (srcHeight.toFloat()/height)
 
-            val size = rxCache.get<GeneralSettings>(KEY_GENERAL_SETTINGS)?.data?.size?:100
+            val size = getGeneralSettingsSize()
 
             // 打码区域左上角x坐标
             val x = (offset.x*xScale).toInt()
@@ -119,7 +127,7 @@ class PreviewViewModel {
             val xScale = (srcWidth.toFloat()/width)
             val yScale = (srcHeight.toFloat()/height)
 
-            val size = rxCache.get<GeneralSettings>(KEY_GENERAL_SETTINGS)?.data?.size?:100
+            val size = getGeneralSettingsSize()
 
             // 创建与输入图像相同大小的新图像
             val outputImage = BufferedImages.create(srcWidth, srcHeight, state.currentImage!!.type)

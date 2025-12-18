@@ -7,6 +7,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.window.*
 import cn.netdiscovery.monica.config.*
+import cn.netdiscovery.monica.config.category.ConfigDefinitions
+import cn.netdiscovery.monica.config.storage.ConfigManager
+import cn.netdiscovery.monica.rxcache.rxCache
 import cn.netdiscovery.monica.di.viewModelModule
 import cn.netdiscovery.monica.history.EditHistoryCenter
 import cn.netdiscovery.monica.http.healthCheck
@@ -14,7 +17,6 @@ import cn.netdiscovery.monica.i18n.LocalizationManager
 import cn.netdiscovery.monica.rxcache.getFilterNames
 import cn.netdiscovery.monica.rxcache.initFilterMap
 import cn.netdiscovery.monica.rxcache.initFilterParamsConfig
-import cn.netdiscovery.monica.rxcache.rxCache
 import cn.netdiscovery.monica.state.*
 import cn.netdiscovery.monica.ui.controlpanel.ai.experiment.experiment
 import cn.netdiscovery.monica.ui.controlpanel.ai.faceswap.faceSwap
@@ -71,6 +73,10 @@ lateinit var mAppKoin: Koin
 private val logger: Logger = LoggerFactory.getLogger(object : Any() {}.javaClass.enclosingClass)
 
 fun main() = application {
+    // 初始化配置管理器（必须在 ApplicationState 创建之前）
+    ConfigManager.initialize(rxCache)
+    ConfigDefinitions.initialize()
+    
     val trayState = rememberTrayState()
 
     val applicationState = rememberApplicationState(
@@ -345,13 +351,16 @@ fun showTopToast(message:String) {
 
 /**
  * 初始化数据，只初始一次，包括：
- * 1. 加载滤镜的配置
- * 2. 加载 opencv 的图像处理库
- * 3. 校验算法服务
+ * 1. 初始化配置定义
+ * 2. 加载滤镜的配置
+ * 3. 加载 opencv 的图像处理库
+ * 4. 校验算法服务
  */
 private fun initData(state:ApplicationState) {
 
     logger.info("os = $os, arch = $arch, osVersion = $osVersion, javaVersion = $javaVersion, javaVendor = $javaVendor, monicaVersion = $appVersion, kotlinVersion = $kotlinVersion")
+
+    // 配置管理器已在 main() 函数开始处初始化，这里不再重复初始化
 
     filterNames.addAll(getFilterNames()) // 获取所有滤镜的名称
 

@@ -5,15 +5,15 @@ import androidx.compose.ui.awt.ComposeWindow
 import androidx.compose.ui.window.Notification
 import androidx.compose.ui.window.TrayState
 import cn.netdiscovery.monica.config.KEY_GENERAL_SETTINGS
+import cn.netdiscovery.monica.config.category.ConfigCategoryManager
+import cn.netdiscovery.monica.config.storage.ConfigType
 import cn.netdiscovery.monica.domain.DecodedPreviewImage
 import cn.netdiscovery.monica.i18n.LocalizationManager
 import cn.netdiscovery.monica.domain.GeneralSettings
 import cn.netdiscovery.monica.opencv.ImageProcess
-import cn.netdiscovery.monica.rxcache.rxCache
 import cn.netdiscovery.monica.ui.theme.ColorTheme
 import cn.netdiscovery.monica.ui.theme.ThemeManager
 import cn.netdiscovery.monica.utils.ImageFormat
-import com.safframework.rxcache.ext.get
 import kotlinx.coroutines.CoroutineScope
 import java.awt.image.BufferedImage
 import java.io.File
@@ -89,21 +89,29 @@ class ApplicationState(val scope:CoroutineScope,
     private val queue: LinkedBlockingDeque<BufferedImage> = LinkedBlockingDeque(40)
 
     // 通用输出框的颜色
-    var outputBoxRText by mutableStateOf(rxCache.get<GeneralSettings>(KEY_GENERAL_SETTINGS)?.data?.outputBoxR?:255)
-    var outputBoxGText by mutableStateOf(rxCache.get<GeneralSettings>(KEY_GENERAL_SETTINGS)?.data?.outputBoxG?:0)
-    var outputBoxBText by mutableStateOf(rxCache.get<GeneralSettings>(KEY_GENERAL_SETTINGS)?.data?.outputBoxB?:0)
+    private val defaultSettings = GeneralSettings(255, 255, 255, 512, 50, "", "", "", "LIGHT")
+    
+    private fun loadGeneralSettings(): GeneralSettings {
+        return ConfigCategoryManager.load(KEY_GENERAL_SETTINGS, defaultSettings)
+    }
+    
+    private val initialSettings = loadGeneralSettings()
+    
+    var outputBoxRText by mutableStateOf(initialSettings.outputBoxR)
+    var outputBoxGText by mutableStateOf(initialSettings.outputBoxG)
+    var outputBoxBText by mutableStateOf(initialSettings.outputBoxB)
 
-    var sizeText by mutableStateOf(rxCache.get<GeneralSettings>(KEY_GENERAL_SETTINGS)?.data?.size?:100)
-    var maxHistorySizeText by mutableStateOf(rxCache.get<GeneralSettings>(KEY_GENERAL_SETTINGS)?.data?.maxHistorySize?:20)
-    var deepSeekApiKeyText by mutableStateOf(rxCache.get<GeneralSettings>(KEY_GENERAL_SETTINGS)?.data?.deepSeekApiKey?:"")
-    var geminiApiKeyText by mutableStateOf(rxCache.get<GeneralSettings>(KEY_GENERAL_SETTINGS)?.data?.geminiApiKey?:"")
-    var algorithmUrlText by mutableStateOf(rxCache.get<GeneralSettings>(KEY_GENERAL_SETTINGS)?.data?.algorithmUrl?:"")
+    var sizeText by mutableStateOf(initialSettings.size)
+    var maxHistorySizeText by mutableStateOf(initialSettings.maxHistorySize)
+    var deepSeekApiKeyText by mutableStateOf(initialSettings.deepSeekApiKey)
+    var geminiApiKeyText by mutableStateOf(initialSettings.geminiApiKey)
+    var algorithmUrlText by mutableStateOf(initialSettings.algorithmUrl)
 
     // 主题设置 - 作为唯一的状态源
     var currentTheme by mutableStateOf(
-        rxCache.get<GeneralSettings>(KEY_GENERAL_SETTINGS)?.data?.themeId?.let { themeId ->
+        initialSettings.themeId.let { themeId ->
             ThemeManager.getThemeById(themeId) ?: ColorTheme.LIGHT
-        } ?: ColorTheme.LIGHT
+        }
     )
     
     // 初始化时同步到ThemeManager
@@ -114,7 +122,13 @@ class ApplicationState(val scope:CoroutineScope,
     fun toOutputBoxScalar() = intArrayOf(outputBoxBText, outputBoxGText, outputBoxRText)
 
     fun saveGeneralSettings() {
-        rxCache.saveOrUpdate(KEY_GENERAL_SETTINGS, GeneralSettings(outputBoxRText, outputBoxGText, outputBoxBText, sizeText, maxHistorySizeText, deepSeekApiKeyText, geminiApiKeyText, algorithmUrlText, currentTheme.getThemeId()))
+        val settings = GeneralSettings(
+            outputBoxRText, outputBoxGText, outputBoxBText, 
+            sizeText, maxHistorySizeText, 
+            deepSeekApiKeyText, geminiApiKeyText, algorithmUrlText, 
+            currentTheme.getThemeId()
+        )
+        ConfigCategoryManager.save(KEY_GENERAL_SETTINGS, settings)
     }
 
     /**

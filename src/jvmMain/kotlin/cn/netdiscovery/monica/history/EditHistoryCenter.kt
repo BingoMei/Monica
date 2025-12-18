@@ -1,9 +1,8 @@
 package cn.netdiscovery.monica.history
 
 import cn.netdiscovery.monica.config.KEY_GENERAL_SETTINGS
+import cn.netdiscovery.monica.config.category.ConfigCategoryManager
 import cn.netdiscovery.monica.domain.GeneralSettings
-import cn.netdiscovery.monica.rxcache.rxCache
-import com.safframework.rxcache.ext.get
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 
@@ -18,11 +17,20 @@ import kotlinx.coroutines.Dispatchers
 object EditHistoryCenter {
 
     private val historyMap = mutableMapOf<String, EditHistoryManager<Any>>()
+    
+    /**
+     * 获取 GeneralSettings.maxHistorySize，带默认值
+     */
+    private fun getMaxHistorySize(): Int {
+        val defaultSettings = GeneralSettings(255, 255, 255, 512, 50, "", "", "", "LIGHT")
+        val settings = ConfigCategoryManager.load(KEY_GENERAL_SETTINGS, defaultSettings)
+        return settings.maxHistorySize
+    }
 
     @Suppress("UNCHECKED_CAST")
     fun <T> getManager(key: String, scope: CoroutineScope? = null): EditHistoryManager<T> {
         return historyMap.getOrPut(key) {
-            val maxHistorySize = rxCache.get<GeneralSettings>(KEY_GENERAL_SETTINGS)?.data?.maxHistorySize?:20
+            val maxHistorySize = getMaxHistorySize()
             EditHistoryManager<Any>(maxHistorySize=maxHistorySize, coroutineScope = scope ?: CoroutineScope(Dispatchers.Default))
         } as EditHistoryManager<T>
     }

@@ -28,3 +28,4 @@ val loadingWidth = (previewWidth*2*0.7).dp
 
 val titleTextSize = 32.sp
 val subTitleTextSize = 20.sp
+

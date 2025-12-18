@@ -21,6 +21,9 @@ dependencies {
     implementation("ch.qos.logback:logback-classic:${rootProject.extra["logback"]}")
     implementation("ch.qos.logback:logback-core:${rootProject.extra["logback"]}")
     implementation("ch.qos.logback:logback-access:${rootProject.extra["logback"]}")
+    
+    // Config module
+    implementation(project(":config"))
 }
 
 tasks.test {

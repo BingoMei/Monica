@@ -1,6 +1,6 @@
 package cn.netdiscovery.monica.i18n
 
-import java.util.prefs.Preferences
+import cn.netdiscovery.monica.config.category.ConfigCategoryManager
 
 /**
  * 国际化管理器
@@ -8,7 +8,6 @@ import java.util.prefs.Preferences
  * 负责管理应用的语言设置和本地化资源
  */
 object LocalizationManager {
-    private val prefs = Preferences.userNodeForPackage(LocalizationManager::class.java)
     private const val LANGUAGE_KEY = "selected_language"
 
     // 当前语言状态
@@ -37,7 +36,7 @@ object LocalizationManager {
      * 获取保存的语言设置
      */
     private fun getSavedLanguage(): Language {
-        val savedCode = prefs.get(LANGUAGE_KEY, null)
+        val savedCode: String? = ConfigCategoryManager.load(LANGUAGE_KEY, null as String?)
         return if (savedCode != null) {
             Language.fromCode(savedCode)
         } else {
@@ -51,8 +50,7 @@ object LocalizationManager {
     fun setLanguage(language: Language) {
         if (_currentLanguage != language) {
             _currentLanguage = language
-            prefs.put(LANGUAGE_KEY, language.code)
-            prefs.flush() // 确保设置立即保存
+            ConfigCategoryManager.save(LANGUAGE_KEY, language.code)
             // 清除缓存，强制重新加载资源
             clearCache()
             // 通知所有监听器语言已变化
