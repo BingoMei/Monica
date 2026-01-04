@@ -5,6 +5,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -212,15 +214,40 @@ private fun CompressionPreviewArea(
         return
     }
 
-    // 单图模式：右侧优先展示“压缩后的预览”；Reset/清理结果后会回到原图展示
+    // 单图模式：右侧优先展示"压缩后的预览"；Reset/清理结果后会回到原图展示
     val displayImage = if (viewModel.showResult && compressed != null) compressed else original
 
-    Image(
-        painter = displayImage.toPainter(),
-        contentDescription = null,
-        modifier = Modifier.fillMaxSize(),
-        contentScale = ContentScale.Fit
-    )
+    Box(modifier = Modifier.fillMaxSize()) {
+        Image(
+            painter = displayImage.toPainter(),
+            contentDescription = null,
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.Fit
+        )
+        
+        // 清除图像按钮（悬浮在右上角）
+        IconButton(
+            onClick = {
+                viewModel.clearSelectedImage()
+                onShowToast(i18nState.getString("image_cleared"))
+            },
+            modifier = Modifier
+                .align(Alignment.TopEnd)
+                .padding(8.dp)
+                .background(
+                    MaterialTheme.colors.surface.copy(alpha = 0.9f),
+                    RoundedCornerShape(8.dp)
+                ),
+            enabled = !viewModel.isCompressing
+        ) {
+            Icon(
+                imageVector = Icons.Default.Close,
+                contentDescription = i18nState.getString("clear_image"),
+                tint = MaterialTheme.colors.error,
+                modifier = Modifier.size(24.dp)
+            )
+        }
+    }
 }
 
 @Composable

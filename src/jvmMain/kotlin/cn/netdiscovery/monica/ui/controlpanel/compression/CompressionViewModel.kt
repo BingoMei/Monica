@@ -375,6 +375,16 @@ class CompressionViewModel {
         compressionLevel = DEFAULT_COMPRESSION_LEVEL
         resetResult()
     }
+    
+    /**
+     * 清除当前加载的图像（用于切换到另一张图片）
+     */
+    fun clearSelectedImage() {
+        selectedImage = null
+        selectedImageFile = null
+        selectedImageFileSize = 0L
+        resetResult()
+    }
 
     fun isAtDefaultParams(): Boolean {
         return selectedAlgorithm == DEFAULT_ALGORITHM &&

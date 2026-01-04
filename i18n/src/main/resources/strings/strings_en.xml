@@ -90,6 +90,8 @@
     <string name="save">Save</string>
     <string name="cannot_read_image_file">Cannot read image file</string>
     <string name="load_image_failed">Failed to load image: %s</string>
+    <string name="image_cleared">Image cleared</string>
+    <string name="clear_image">Clear image</string>
     <string name="webp_not_supported_auto_convert">WebP is not supported on this system, will automatically convert to %s</string>
     <string name="batch_compression_warning">Batch Compression Warning</string>
     <string name="output_folder_has_files">Output folder already contains %d files. Batch compression may overwrite files with the same name. Continue?</string>
