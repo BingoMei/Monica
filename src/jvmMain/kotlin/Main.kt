@@ -29,6 +29,7 @@ import cn.netdiscovery.monica.ui.controlpanel.filter.filter
 import cn.netdiscovery.monica.ui.controlpanel.generategif.generateGif
 import cn.netdiscovery.monica.ui.controlpanel.shapedrawing.shapeDrawing
 import cn.netdiscovery.monica.ui.controlpanel.compression.compressionView
+import cn.netdiscovery.monica.ui.controlpanel.webscreenshot.webScreenshot
 import cn.netdiscovery.monica.ui.main.generalSettings
 import cn.netdiscovery.monica.ui.main.mainView
 import cn.netdiscovery.monica.ui.main.openURLDialog
@@ -37,7 +38,6 @@ import cn.netdiscovery.monica.ui.main.showVersionInfo
 import cn.netdiscovery.monica.ui.preview.PreviewViewModel
 import cn.netdiscovery.monica.ui.showimage.showImage
 import cn.netdiscovery.monica.ui.widget.PageLifecycle
-import cn.netdiscovery.monica.ui.widget.centerToast
 import cn.netdiscovery.monica.ui.widget.showLoading
 import cn.netdiscovery.monica.exception.ErrorHandler
 import cn.netdiscovery.monica.exception.ErrorState
@@ -46,6 +46,8 @@ import cn.netdiscovery.monica.utils.chooseImage
 import cn.netdiscovery.monica.utils.getBufferedImage
 import cn.netdiscovery.monica.utils.captureFullScreen
 import cn.netdiscovery.monica.utils.loadScreenshotToState
+import cn.netdiscovery.monica.utils.getUrlFromClipboard
+import cn.netdiscovery.monica.utils.loadWebScreenshotToState
 import cn.netdiscovery.monica.ui.screenshot.showSwingScreenshotAreaSelector
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -167,6 +169,26 @@ fun main() = application {
                     showScreenshotAreaSelector = true
                 },
             )
+            Item(
+                text = LocalizationManager.getString("web_screenshot"),
+                onClick = {
+                    // 网页长截图：从剪贴板读取 URL 并直接截图
+                    applicationState.scope.launch {
+                        try {
+                            val url = getUrlFromClipboard()
+                            if (url == null) {
+                                showTopToast("剪贴板中没有有效的 URL，请先复制网页地址")
+                                return@launch
+                            }
+
+                            loadWebScreenshotToState(applicationState, url)
+                        } catch (e: Exception) {
+                            logger.error("网页截图失败", e)
+                            showTopToast("网页截图失败: ${e.message}")
+                        }
+                    }
+                },
+            )
             Separator()
             Item(
                 text = LocalizationManager.getString("save_image"),
@@ -250,7 +272,8 @@ fun main() = application {
                     && applicationState.currentStatus != FilterStatus
                     && applicationState.currentStatus != FaceSwapStatus
                     && applicationState.currentStatus != OpenCVDebugStatus
-                    && applicationState.currentStatus != CartoonStatus)) {
+                    && applicationState.currentStatus != CartoonStatus
+                    && applicationState.currentStatus != WebScreenshotStatus)) {
             showTopToast("请先选择图像")
 
             return@application
@@ -327,6 +350,10 @@ fun main() = application {
                         logger.info("enter CompressionView")
                         compressionView(applicationState)
                     }
+                    WebScreenshotStatus -> {
+                        logger.info("enter WebScreenshotView")
+                        webScreenshot(applicationState)
+                    }
                     else -> {}
                 }
             }
@@ -395,7 +422,7 @@ private fun initData(state:ApplicationState) {
     }
 }
 
-private fun getWindowsTitle(state: ApplicationState):String = when(state.currentStatus) {
+private fun getWindowsTitle(state: ApplicationState): String = when(state.currentStatus) {
     DoodleStatus          -> LocalizationManager.getString("window_title_doodle")
     ShapeDrawingStatus    -> LocalizationManager.getString("window_title_shape_drawing")
     ColorPickStatus       -> LocalizationManager.getString("window_title_color_pick")
@@ -407,5 +434,6 @@ private fun getWindowsTitle(state: ApplicationState):String = when(state.current
     FaceSwapStatus        -> LocalizationManager.getString("window_title_face_swap")
     CartoonStatus         -> LocalizationManager.getString("window_title_cartoon")
     CompressionStatus     -> LocalizationManager.getString("window_title_compression")
+    WebScreenshotStatus   -> LocalizationManager.getString("window_title_web_screenshot")
     else                  -> LocalizationManager.getString("window_title_preview")
 }

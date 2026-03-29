@@ -19,6 +19,7 @@ import cn.netdiscovery.monica.ui.controlpanel.doodle.DoodleViewModel
 import cn.netdiscovery.monica.ui.controlpanel.filter.viewmodel.FilterViewModel
 import cn.netdiscovery.monica.ui.controlpanel.generategif.GenerateGifViewModel
 import cn.netdiscovery.monica.ui.controlpanel.shapedrawing.ShapeDrawingViewModel
+import cn.netdiscovery.monica.ui.controlpanel.webscreenshot.WebScreenshotViewModel
 import cn.netdiscovery.monica.ui.main.MainViewModel
 import cn.netdiscovery.monica.ui.preview.PreviewViewModel
 
@@ -52,4 +53,5 @@ val viewModelModule = module {
     singleOf(::HistoryViewModel)
     singleOf(::GenerateGifViewModel)
     singleOf(::CartoonViewModel)
+    singleOf(::WebScreenshotViewModel)
 }

@@ -9,6 +9,7 @@
     <string name="save_image">保存图像</string>
     <string name="screenshot_full_screen">截屏（全屏）</string>
     <string name="screenshot_area">截屏（区域选择）</string>
+    <string name="web_screenshot">网页长截图</string>
     <string name="exit">退出</string>
     
     <!-- 控制面板 -->
@@ -658,5 +659,26 @@
     <string name="window_title_face_swap">人脸替换</string>
     <string name="window_title_cartoon">图像动漫化</string>
     <string name="window_title_compression">图像压缩</string>
+    <string name="window_title_web_screenshot">网页长截图</string>
     <string name="window_title_preview">放大预览</string>
+    
+    <!-- 网页截图 -->
+    <string name="nodejs_not_installed">未检测到 Node.js 环境</string>
+    <string name="please_install_nodejs">请先安装 Node.js (https://nodejs.org/)</string>
+    <string name="website_url">网站地址</string>
+    <string name="enter_url">请输入网页URL</string>
+    <string name="screenshot_options">截图选项</string>
+    <string name="full_page_screenshot">全页截图</string>
+    <string name="wait_until">等待策略</string>
+    <string name="timeout_ms">超时时间(毫秒)</string>
+    <string name="viewport_width">视口宽度</string>
+    <string name="viewport_height">视口高度</string>
+    <string name="screenshot_clarity">截图清晰度倍率</string>
+    <string name="invalid_screenshot_clarity">清晰度倍率无效</string>
+    <string name="please_enter_valid_screenshot_clarity">请输入 0 到 4 之间的有效倍率，例如 1.5 或 2.0</string>
+    <string name="capture_screenshot">开始截图</string>
+    <string name="reset">重置</string>
+    <string name="usage_tips">提示：确保已安装 Node.js 和 Playwright。首次使用需要运行 'npx playwright install chromium' 安装浏览器。</string>
+    <string name="invalid_url">无效的URL</string>
+    <string name="please_enter_valid_url">请输入有效的URL（以 http:// 或 https:// 开头）</string>
 </resources>

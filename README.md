@@ -34,8 +34,34 @@
 ## 从源码运行
 使用 IntelliJ IDEA / IntelliJ IDEA CE
 
-```
+```bash
 git clone https://github.com/fengzhizi715/Monica.git
+cd Monica
+./gradlew run
+```
+
+## 打包
+
+当前推荐直接使用统一打包命令：
+
+```bash
+./gradlew packageCurrentOsWithBundledWebRuntime
+```
+
+说明：
+
+* 本地开发默认使用 `isProVersion=false`
+* 打包任务会自动切换到 `isProVersion=true`
+* macOS 产物默认输出到 `build/output/main/dmg/`
+* Windows 产物默认输出到 `build/output/main/exe/`
+* Linux 产物默认输出到 `build/output/main/rpm/`
+
+如果需要直接调用平台任务，也可以使用：
+
+```bash
+./gradlew packageDmg
+./gradlew packageExe
+./gradlew packageRpm
 ```
 
 ## 🍎 macOS 安装包

@@ -1,0 +1,12 @@
+{
+  "name": "monica-web-screenshot",
+  "version": "1.0.0",
+  "description": "Web screenshot service for Monica",
+  "main": "web-screenshot.js",
+  "scripts": {
+    "screenshot": "node web-screenshot.js"
+  },
+  "dependencies": {
+    "playwright": "^1.40.0"
+  }
+}

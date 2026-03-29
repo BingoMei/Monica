@@ -8,7 +8,25 @@ repositories {
     maven { url = uri("https://jitpack.io") }
 }
 
-val isProVersion = false // true 为打包的版本，false 是本地开发的版本
+val requestedTaskNames = gradle.startParameter.taskNames
+
+val isPackagingBuild = requestedTaskNames.any { taskName ->
+    val normalized = taskName.substringAfterLast(':')
+    normalized in setOf(
+        "packageCurrentOsWithBundledWebRuntime",
+        "packageDmg",
+        "packageMsi",
+        "packageExe",
+        "packageRpm",
+        "packageDistributionForCurrentOS",
+        "createDistributable"
+    )
+}
+
+val isProVersion = providers.gradleProperty("isProVersion")
+    .map(String::toBoolean)
+    .orElse(isPackagingBuild)
+    .get()
 
 buildConfig {
     useKotlinOutput { topLevelConstants = true }

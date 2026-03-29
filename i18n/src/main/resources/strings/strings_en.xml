@@ -9,6 +9,7 @@
     <string name="save_image">Save Image</string>
     <string name="screenshot_full_screen">Screenshot (Full Screen)</string>
     <string name="screenshot_area">Screenshot (Area Selection)</string>
+    <string name="web_screenshot">Web Long Screenshot</string>
     <string name="exit">Exit</string>
     
     <!-- Control panel -->
@@ -662,5 +663,26 @@
     <string name="window_title_face_swap">Face Swap</string>
     <string name="window_title_cartoon">Image Cartoonization</string>
     <string name="window_title_compression">Image Compression</string>
+    <string name="window_title_web_screenshot">Web Long Screenshot</string>
     <string name="window_title_preview">Preview</string>
+    
+    <!-- Web Screenshot -->
+    <string name="nodejs_not_installed">Node.js not detected</string>
+    <string name="please_install_nodejs">Please install Node.js first (https://nodejs.org/)</string>
+    <string name="website_url">Website URL</string>
+    <string name="enter_url">Enter URL</string>
+    <string name="screenshot_options">Screenshot Options</string>
+    <string name="full_page_screenshot">Full Page Screenshot</string>
+    <string name="wait_until">Wait Until</string>
+    <string name="timeout_ms">Timeout (ms)</string>
+    <string name="viewport_width">Viewport Width</string>
+    <string name="viewport_height">Viewport Height</string>
+    <string name="screenshot_clarity">Screenshot Clarity Scale</string>
+    <string name="invalid_screenshot_clarity">Invalid Clarity Scale</string>
+    <string name="please_enter_valid_screenshot_clarity">Enter a valid scale between 0 and 4, such as 1.5 or 2.0</string>
+    <string name="capture_screenshot">Capture Screenshot</string>
+    <string name="reset">Reset</string>
+    <string name="usage_tips">Tip: Make sure Node.js and Playwright are installed. First-time use requires running 'npx playwright install chromium' to install the browser.</string>
+    <string name="invalid_url">Invalid URL</string>
+    <string name="please_enter_valid_url">Please enter a valid URL (starting with http:// or https://)</string>
 </resources>

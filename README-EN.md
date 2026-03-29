@@ -38,8 +38,34 @@ It supports a wide range of image formats (including camera RAW), integrates bot
 
 Use IntelliJ IDEA / IntelliJ IDEA CE
 
-```
+```bash
 git clone https://github.com/fengzhizi715/Monica.git
+cd Monica
+./gradlew run
+```
+
+## Packaging
+
+Recommended packaging command:
+
+```bash
+./gradlew packageCurrentOsWithBundledWebRuntime
+```
+
+Notes:
+
+* Local development defaults to `isProVersion=false`
+* Packaging tasks automatically switch to `isProVersion=true`
+* macOS output: `build/output/main/dmg/`
+* Windows output: `build/output/main/exe/`
+* Linux output: `build/output/main/rpm/`
+
+If you want to run platform-specific tasks directly:
+
+```bash
+./gradlew packageDmg
+./gradlew packageExe
+./gradlew packageRpm
 ```
 
 ## 🍎 macOS Packages

@@ -6,7 +6,6 @@ import androidx.compose.ui.window.Notification
 import androidx.compose.ui.window.TrayState
 import cn.netdiscovery.monica.config.KEY_GENERAL_SETTINGS
 import cn.netdiscovery.monica.config.category.ConfigCategoryManager
-import cn.netdiscovery.monica.config.storage.ConfigType
 import cn.netdiscovery.monica.domain.DecodedPreviewImage
 import cn.netdiscovery.monica.i18n.LocalizationManager
 import cn.netdiscovery.monica.domain.GeneralSettings
@@ -51,6 +50,7 @@ const val FaceDetectStatus: Int = 17
 const val SketchDrawingStatus: Int = 18
 const val FaceSwapStatus: Int = 19
 const val CartoonStatus: Int = 20
+const val WebScreenshotStatus: Int = 21
 
 
 
